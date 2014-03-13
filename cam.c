@@ -6,12 +6,13 @@
 /*   By: jmaurice <jmaurice@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2014/02/25 13:05:05 by jmaurice          #+#    #+#             */
-/*   Updated: 2014/03/13 13:09:30 by jmaurice         ###   ########.fr       */
+/*   Updated: 2014/03/13 14:24:50 by jmaurice         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "rt.h"
 
+/*
 void	init_cam(t_cam *cam, t_vector pos)
 {
 	float		h;
@@ -48,6 +49,35 @@ void	init_cam(t_cam *cam, t_vector pos)
 	cam->height = h / WIN_HGT;
 	cam->width = w / WIN_WIDTH;
 }
+//*/
+//*
+void	init_cam(t_cam *cam, t_vector pos)
+{
+	float		h;
+	float		w;
+	t_vector	center;
+
+	cam->pos = pos;
+	cam->up = init_vect(0, 1, 0); // 0 -1 0
+	cam->look_at = init_vect(0, 0, -1);
+//	cam->look_at = vect_norm(cam->look_at);
+	cam->right = init_vect(1, 0, 0);
+//	cam->right = cross_product(cam->up, cam->look_at); // ?
+
+//	h = 2 * DIST_VP * tan(FOV_RAD);
+//	w = h * RATIO;
+	h = .35;
+	w = .5;
+
+	center = vect_sub(cam->pos, vect_scale(cam->look_at, -DIST_VP));
+
+	cam->upleft = vect_scale(center, -h / 2.0);
+	cam->upleft = vect_scale(cam->upleft, -w / 2.0);
+
+	cam->height = h / WIN_HGT;
+	cam->width = w / WIN_WIDTH;
+}
+//*/
 
 t_ray	prim_ray(t_cam *cam, int x, int y)
 {
